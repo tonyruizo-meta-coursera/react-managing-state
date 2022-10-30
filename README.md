@@ -1,70 +1,56 @@
-# Getting Started with Create React App
+# Task
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+In the starter code of this code lab, you are given a Fruits component that has its own state. Based on this state, it outputs three fruits on the screen. Additionally, you have a FruitsCounter component which shows a message that reads: "Total fruits: 2".
 
-## Available Scripts
+Y​our task is to lift state up from the Fruits component to the App component, so that you can then pass the state information to both the Fruits component and the FruitsCounter component. This change to the app should fix the previously incorrect message of "Total fruits: 2". The new message should be "Total fruits: 3". However, the new message will not be just a hard-coded string. Instead, it should reflect the number of fruits that exist in the state variable, so based on how many fruits there are in the state array, this information should affect the output of the total number of fruits - as returned from the FruitsCounter component.
 
-In the project directory, you can run:
+## Steps
 
-### `npm start`
+**Step 1.** This task’s starting point is the stateless App component’s code:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```jsx
+import Fruits from "./Fruits";
+import FruitsCounter from "./FruitsCounter";
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+function App() {
+  return (
+    <div className="App">
+      <h1>Where should the state go?</h1>
+      <Fruits />
+      <FruitsCounter />
+    </div>
+  );
+}
 
-### `npm test`
+export default App;
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The first step of this task is to move the state from the Fruits component:
 
-### `npm run build`
+```jsx
+import React from "react";
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+function Fruits() {
+  const [fruits] = React.useState([
+    { fruitName: "apple", id: 1 },
+    { fruitName: "apple", id: 2 },
+    { fruitName: "plum", id: 3 },
+  ]);
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+  return (
+    <div>
+      {fruits.map((f) => (
+        <p key={f.id}>{f.fruitName}</p>
+      ))}
+    </div>
+  );
+}
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+export default Fruits;
+```
 
-### `npm run eject`
+T​he state should be moved to the App component. That is the first step of this task.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+**Step 2.** AOnce you've moved the state up from the Fruits component to the App component, you need to update the FruitsCounter component so that it accepts that state from the App component, and then uses it to display the number of the available fruits using the length property of the array of fruits from the fruits state variable that comes from App and is received in FruitsCounter as a prop.utton tags, add the following text: Guess the number between 1 and 3.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+**Step 3.** Save your updates and serve the app so that it shows the correct count of fruits, while the rest of the output should remain unchanged.
